@@ -1,5 +1,6 @@
 package symbols_table;
 
-public class Method {
-    
+public class Method extends Symbol {
+    private Type returnType;
+    private ParameterList parameter;
 }
