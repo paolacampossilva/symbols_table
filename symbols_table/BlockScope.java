@@ -1,5 +1,7 @@
 package symbols_table;
 
-public class BlockScope { 
-    
+import java.util.TreeMap;
+
+public class BlockScope {
+    private TreeMap<String, Variable> variables;
 }
