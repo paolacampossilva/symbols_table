@@ -20,9 +20,4 @@ public class Type {
     public String id() {
         return name;
     }
-
-    public Bool isValid() {
-
-    }
-
-}
+}// Type
