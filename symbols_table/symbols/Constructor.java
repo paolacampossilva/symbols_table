@@ -4,5 +4,7 @@ import symbols_table.scope.*;
 import symbols_table.*;
 
 public class Constructor extends Symbol {
-    
+    public Constructor(String name) {
+        super(name);
+    }
 }

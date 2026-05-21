@@ -4,5 +4,7 @@ import symbols_table.scope.*;
 import symbols_table.*;
 
 public class Variable extends Symbol {
-
+    public Variable(String name) {
+        super(name);
+    }
 }
