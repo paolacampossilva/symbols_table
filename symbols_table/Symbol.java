@@ -10,14 +10,20 @@ public abstract class Symbol {
 
     // Construtor
     public Symbol(String name) {
+        if (!isValidName(name)) {
+            throw new IllegalArgumentException("Error: invalid symbol name " + name);
+        }
         this.name = name;
         this.modifiers = new HashSet<>();
     }
 
     public Symbol(String name, Set<Modifier> modifiers) {
+        if (!isValidName(name)) {
+            throw new IllegalArgumentException("Error: invalid symbol name " + name);
+        }
         this.name = name;
         if (modifiers != null)
-            this.modifiers = modifiers;
+            this.modifiers = new HashSet<>(modifiers);
         // Caso aconteça um erro, ou algo inesperado, a coleção é inciada vazia
         else
             this.modifiers = new HashSet<>();
@@ -49,13 +55,8 @@ public abstract class Symbol {
         return this.modifiers.contains(modifier);
     }
 
-    public boolean isValidName(String name) {
-        if (name != null) {
-            if (!name.contains(" ") || !name.contains(".")) {
-                return true;
-            }
-        }
-        return false;
+    public static boolean isValidName(String name) {
+        return name != null && !name.contains(" ") && !name.contains(".");
     }
 
     // Verificadores para Scope
