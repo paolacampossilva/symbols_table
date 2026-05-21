@@ -2,6 +2,8 @@ package symbols_table.scope;
 
 import symbols_table.symbols.*;
 import symbols_table.*;
+
+import java.lang.reflect.Parameter;
 import java.util.TreeMap;
 
 /**
@@ -25,15 +27,15 @@ public class MethodScope implements Scope {
 
     @Override
     public void define(Symbol symbol) throws DuplicateSymbolException, LogicalException {
-        if (symbol instanceof ClassSymbol)
+        if (symbol instanceof Variable || symbol instanceof Parameter) {
+            String name = symbol.getName();
+
+            if (symbols.containsKey(name))
+                throw new DuplicateSymbolException(name);
+
+            symbols.put(name, symbol);
+        } else
             throw new LogicalException(symbol.getClass().getSimpleName());
-
-        String name = symbol.getName();
-
-        if (symbols.containsKey(name))
-            throw new DuplicateSymbolException(name);
-
-        symbols.put(name, symbol);
     }
 
     @Override
