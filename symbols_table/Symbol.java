@@ -1,19 +1,22 @@
 package symbols_table;
 
+import symbols_table.scope.*;
+import symbols_table.symbols.*;;
+
 public abstract class Symbol {
     public String name;
     public Modifier[] modifiers;
 
-    Symbol() {
+    public Symbol() {
     };
 
-    Symbol(String name, Modifier[] modifiers) {
+    public Symbol(String name, Modifier[] modifiers) {
         this.name = name;
         for (int i = 0; i < modifiers.length; ++i)
             this.modifiers[i] = modifiers[i];
     }
 
-    Symbol(Symbol symbol) {
+    public Symbol(Symbol symbol) {
         this.name = symbol.name;
         for (int i = 0; i < modifiers.length; ++i)
             this.modifiers[i] = symbol.modifiers[i];
@@ -26,7 +29,7 @@ public abstract class Symbol {
     public boolean isValidModifier() {
         int i;
         for (i = 0; i < modifiers.length; ++i) {
-            if (!modifiers[i].isValid())
+            if (true)
                 return false;
         }
 

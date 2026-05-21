@@ -1,5 +1,6 @@
-package symbols_table;
+package symbols_table.scope;
 
+import symbols_table.symbols.*;
 import java.util.TreeMap;
 
 public class BlockScope {
