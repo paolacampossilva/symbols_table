@@ -25,25 +25,29 @@ public class GlobalScope implements Scope {
         return classes.get(name);
     }
 
-    public void addClass(ClassSymbol classSymbol) {
-        if (this.getClass(classSymbol.getName()) == null)
-            classes.put(classSymbol.getName(), classSymbol);
-    }
-
     @Override
     public Scope getParent() {
-        return null; 
+        return null;
     }
 
     @Override
     public Symbol search(String name) {
-        if (classes.containsKey(name)) {
+        if (classes.containsKey(name))
             return this.getClass(name);
-        }
-        
-        // 2. Como não há escopo pai para delegar a busca (ele é o topo da hierarquia),
-        // se o símbolo não foi encontrado até aqui, retornamos null garantindo 
-        // que o identificador não existe na tabela.
-        return null; 
+        return null;
     }
+
+    @Override
+    public void define(Symbol symbol) throws DuplicateSymbolException, LogicalException {
+        if (symbol instanceof ClassSymbol) {
+            String name = symbol.getName();
+
+            if (classes.containsKey(name))
+                throw new DuplicateSymbolException();
+
+            classes.put(name, (ClassSymbol) symbol);
+        } else
+            throw new LogicalException(symbol.getClass().getName());
+    }
+
 }
