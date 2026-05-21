@@ -25,11 +25,8 @@ public abstract class Symbol {
 
     // Cópia
     public Symbol(Symbol symbol) {
-        if (symbol != null) {
-            this.name = symbol.name;
-            this.modifiers = new HashSet<>(symbol.modifiers);
-        } else
-            this.modifiers = new HashSet<>();
+        this.name = symbol.name;
+        this.modifiers = new HashSet<>(symbol.modifiers);
     }
 
     // Acessos ao atributos privados
