@@ -8,12 +8,6 @@ public abstract class Symbol {
     private String name;
     private Set<Modifier> modifiers;
 
-    // Construtor Default; Inicialização da coleção vazia (evita
-    // NullPointerException)
-    public Symbol() {
-        this.modifiers = new HashSet<>();
-    };
-
     // Construtor
     public Symbol(String name) {
         this.name = name;
