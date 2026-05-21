@@ -15,6 +15,11 @@ public abstract class Symbol {
     };
 
     // Construtor
+    public Symbol(String name) {
+        this.name = name;
+        this.modifiers = new HashSet<>();
+    }
+
     public Symbol(String name, Set<Modifier> modifiers) {
         this.name = name;
         if (modifiers != null)
