@@ -1,23 +1,50 @@
 package symbols_table;
 
+import symbols_table.symbols.*;
+
 public class Type {
-    private String name;
-
-    // Construtor
-    Type() {
-    };
-
-    Type(String name) {
-        this.name = name;
+    // Enum
+    public enum PrimitiveType {
+        INT, FLOAT, VOID 
     }
 
-    // Copia
-    Type(Type x) {
-        this.name = x.name;
+    // Atributos
+    private PrimitiveType primitiveType;
+    private ClassSymbol classType;
+    private boolean isPrimitive; 
+
+    // Construtores
+    public Type(PrimitiveType type) {
+        this.primitiveType = type;
+        this.isPrimitive = true;
+    }
+
+    public Type(ClassSymbol classType) {
+        this.classType = classType;
+        this.isPrimitive = false;
     }
 
     // Métodos
-    public String id() {
-        return name;
+    public boolean isPrimitive() {
+        return isPrimitive;
     }
-}// Type
+
+    public PrimitiveType getPrimitiveType() {
+        return primitiveType;
+    }
+
+    public ClassSymbol getClassType() {
+        return classType;
+    }
+    
+    @Override
+    public String toString() {
+        if (isPrimitive) {
+            return primitiveType.toString();
+        } 
+        else {
+            return classType.getName();
+        }
+    }
+
+} // Type
