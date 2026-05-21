@@ -1,7 +1,8 @@
 package symbols_table.scope;
 
 import symbols_table.symbols.*;
+import symbols_table.*;
 
-public class MethodScope {
+public class MethodScope implements Scope {
 
 }
