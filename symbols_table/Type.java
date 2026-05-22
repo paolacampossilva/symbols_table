@@ -24,6 +24,17 @@ public class Type {
         this.isPrimitive = false;
     }
 
+    public Type(Type type) {
+        if (type.isPrimitive()) {
+            this.primitiveType = type.getPrimitiveType();
+            this.isPrimitive = true;
+        }
+        else {
+            this.classType = new ClassSymbol(type.classType);
+            this.isPrimitive = false;
+        }
+    }
+
     // Métodos
     public boolean isPrimitive() {
         return isPrimitive;
