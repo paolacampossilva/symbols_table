@@ -1,16 +1,12 @@
 package symbols_table.symbols;
 
-import symbols_table.scope.*;
-
 import java.util.Set;
-
 import symbols_table.*;
 
 public class Parameter extends Symbol {
-    // Atributo
+
     private Type type;
 
-    // Construtores
     public Parameter(String name, Type type) {
         super(name);
         this.type = type;
