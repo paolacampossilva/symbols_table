@@ -2,6 +2,9 @@ package symbols_table.scope;
 
 import symbols_table.symbols.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import symbols_table.*;
 
 /**
@@ -12,8 +15,9 @@ import symbols_table.*;
 public class SymbolTable {
 
     private GlobalScope globalScope;
-    private ClassSymbol currentClass;
+    private ClassScope currentClass;
     private Scope currentScope;
+    private List<Method> allMethods = new ArrayList<>();
 
     // Construtor
     public SymbolTable() {
@@ -22,9 +26,8 @@ public class SymbolTable {
         currentClass = null;
     }
 
-    // to do
     public ClassSymbol addClass(String name) throws DuplicateSymbolException, LogicalException {
-        ClassSymbol newClass = new ClassSymbol(name, globalScope);
+        ClassSymbol newClass = new ClassSymbol(name);
         globalScope.define(newClass);
         return newClass;
     }
@@ -36,7 +39,7 @@ public class SymbolTable {
         return null;
     }
 
-    public void openClass(ClassSymbol clazz) {
+    public void openClass(ClassScope clazz) {
         currentClass = clazz;
         currentScope = clazz;
     }
@@ -49,10 +52,67 @@ public class SymbolTable {
 
     public Method addMethod(String name, Parameter[] parameters) throws DuplicateSymbolException, LogicalException {
         if (currentClass == null)
-            throw new LogicalException(currentClass.getClass().getSimpleName());
+            throw new LogicalException("Method", "ClassScope");
+
+        for (Method m : allMethods) {
+            if (m.getName().equals(name))
+                if (hasSameParameters(m.getParameters(), parameters))
+                    throw new DuplicateSymbolException();
+        }
+
         Method newMethod = new Method(name, parameters);
-        currentClass.define(newMethod);
+        try {
+            currentClass.define(newMethod);
+        } catch (DuplicateSymbolException e) {
+        }
+
+        allMethods.add(newMethod);
         return newMethod;
+    }
+
+    public List<Method> findMethods(String name, ClassSymbol clazz) {
+        List<Method> result = new ArrayList<>();
+        for (Method m : allMethods)
+            if (m.getName().equals(name))
+                result.add(m);
+
+        return result;
+    }
+
+    public Method findMethod(String name, List<Type> argumTypes, ClassSymbol clazz) {
+        for (Method m : allMethods) {
+            if (m.getName().equals(name)) {
+                Parameter[] params = m.getParameters();
+                if (params.length != argumTypes.size())
+                    continue;
+
+                boolean match = true;
+                for (int i = 0; i < params.length; ++i)
+                    if (!params[i].getType().isEqualTo(argumTypes.get(i))) {
+                        match = false;
+                        break;
+                    }
+
+                if (match)
+                    return m;
+            }
+        }
+        return null;
+    }
+
+    public boolean hasSameParameters(Parameter[] p1, Parameter[] p2) {
+
+        if (p1 == null && p2 == null)
+            return true;
+        if (p1 == null || p2 == null)
+            return false;
+        if (p1.length != p2.length)
+            return false;
+        for (int i = 0; i < p1.length; ++i)
+            if (!p1[i].getType().isEqualTo((p2[i].getType())))
+                return false;
+
+        return true;
     }
 
     public void openMethod(Method method) throws DuplicateSymbolException, LogicalException {
@@ -91,11 +151,11 @@ public class SymbolTable {
         System.out.println("Estado Atual da Tabela de Símbolos" + "\n" + "Escopo Global: " + globalScope + "\n"
                 + "Classe Corrente: ");
 
-        if (currentClass != null)
-            System.out.println(currentClass.getName() + "\n");
+        if (currentClass != null && currentClass.getClassSymbol() != null)
+            System.out.println(currentClass.getClassSymbol().getName() + "\n");
         else
-            System.out.println("nenhuma");
-        System.out.println("Escopo Corrente: " + currentScope.getClass().getSimpleName());
+            System.out.println("nenhuma\n");
+        System.out.println("Escopo Corrente: " + currentScope.getClass().getSimpleName() + "\n");
     }
 
 }
