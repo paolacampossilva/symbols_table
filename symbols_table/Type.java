@@ -5,13 +5,13 @@ import symbols_table.symbols.*;
 public class Type {
     // Enum
     public enum PrimitiveType {
-        INT, FLOAT, VOID 
+        INT, FLOAT, VOID
     }
 
     // Atributos
     private PrimitiveType primitiveType;
     private ClassSymbol classType;
-    private boolean isPrimitive; 
+    private boolean isPrimitive;
 
     // Construtores
     public Type(PrimitiveType type) {
@@ -47,13 +47,21 @@ public class Type {
     public ClassSymbol getClassType() {
         return classType;
     }
-    
+
+    public boolean isEqualTo(Type other) {
+        if ((other == null) || (this.isPrimitive != other.isPrimitive()))
+            return false;
+        if (this.isPrimitive)
+            return this.primitiveType == other.getPrimitiveType();
+        else
+            return this.classType.getName().equals(other.getClassType().getName());
+    }
+
     @Override
     public String toString() {
         if (isPrimitive) {
             return primitiveType.toString();
-        } 
-        else {
+        } else {
             return classType.getName();
         }
     }
