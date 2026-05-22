@@ -1,7 +1,5 @@
 package symbols_table.symbols;
 
-import symbols_table.scope.*;
-
 import java.util.Set;
 
 import symbols_table.*;
