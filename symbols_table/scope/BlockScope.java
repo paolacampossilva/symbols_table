@@ -36,7 +36,7 @@ public class BlockScope implements Scope {
 
     @Override
     public void define(Symbol symbol) throws DuplicateSymbolException, LogicalException {
-        if (symbol instanceof ClassSymbol)
+        if ((symbol instanceof ClassSymbol) || (symbol instanceof Method))
             throw new LogicalException(symbol.getClass().getSimpleName());
         String name = symbol.getName();
         if (symbols.containsKey(name))

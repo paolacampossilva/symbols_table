@@ -4,67 +4,98 @@ import symbols_table.symbols.*;
 
 import symbols_table.*;
 
-import java.util.List;
+/**
+ * @author Paola Campos da Silva
+ * @author João Pedro Huppes Arenales
+ */
 
 public class SymbolTable {
-    public ClassSymbol addClass(String name)
-            throws DuplicateSymbolException {
-        // insert your code here
-        return null;
+
+    private GlobalScope globalScope;
+    private ClassSymbol currentClass;
+    private Scope currentScope;
+
+    // Construtor
+    public SymbolTable() {
+        globalScope = new GlobalScope();
+        currentScope = globalScope;
+        currentClass = null;
+    }
+
+    // to do
+    public ClassSymbol addClass(String name) throws DuplicateSymbolException, LogicalException {
+        ClassSymbol newClass = new ClassSymbol(name, globalScope);
+        globalScope.define(newClass);
+        return newClass;
     }
 
     public ClassSymbol findClass(String name) {
-        // insert your code here
+        Symbol sym = globalScope.search(name);
+        if (sym instanceof ClassSymbol)
+            return (ClassSymbol) sym;
         return null;
     }
 
     public void openClass(ClassSymbol clazz) {
-        // insert your code here
+        currentClass = clazz;
+        currentScope = clazz;
     }
 
     public void closeClass() {
-        // insert your code here
+        if (currentClass != null)
+            currentScope = this.currentScope.getParent();
+        this.currentClass = null;
     }
 
-    public Method addMethod(String name, Parameter[] parameters)
-            throws DuplicateSymbolException {
-        // insert your code here
-        return null;
+    public Method addMethod(String name, Parameter[] parameters) throws DuplicateSymbolException, LogicalException {
+        if (currentClass == null)
+            throw new LogicalException(currentClass.getClass().getSimpleName());
+        Method newMethod = new Method(name, parameters);
+        currentClass.define(newMethod);
+        return newMethod;
     }
 
-    public List<Method> findMethods(String name, ClassSymbol clazz) {
-        // insert your code here
-        return null;
-    }
-
-    public Method findMethod(String name, List<Type> argumentTypes, ClassSymbol clazz) {
-        // insert your code here
-        return null;
-    }
-
-    public void openMethod(Method method) {
-        // insert your code here
+    public void openMethod(Method method) throws DuplicateSymbolException, LogicalException {
+        MethodScope methodScope = new MethodScope(currentClass);
+        if (method.getParameters() != null) {
+            for (Parameter p : method.getParameters())
+                methodScope.define(p);
+        }
+        currentScope = methodScope;
     }
 
     public void closeMethod() {
-        // insert your code here
+        if (currentScope != null) {
+            currentScope = currentScope.getParent();
+        }
     }
 
     public void openBlock() {
-        // insert your code here
-
+        BlockScope newBlock = new BlockScope(currentScope);
+        currentScope = newBlock;
     }
 
     public void closeBlock() {
-        // insert your code here
+        if (currentScope != null)
+            currentScope = currentScope.getParent();
 
+    }
+
+    public Symbol findSymbol(String name) {
+        if (currentScope != null)
+            return currentScope.search(name);
+        return null;
     }
 
     public void print() {
-        // insert your code here
+        System.out.println("Estado Atual da Tabela de Símbolos" + "\n" + "Escopo Global: " + globalScope + "\n"
+                + "Classe Corrente: ");
 
+        if (currentClass != null)
+            System.out.println(currentClass.getName() + "\n");
+        else
+            System.out.println("nenhuma");
+        System.out.println("Escopo Corrente: " + currentScope.getClass().getSimpleName());
     }
 
-    private GlobalScope globalScope;
-    private ClassSymbol currentClass;
 }

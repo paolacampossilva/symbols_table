@@ -40,7 +40,7 @@ public class ClassSymbol extends Symbol implements Scope {
 
     public ClassSymbol(ClassSymbol classSymbol) {
         super(classSymbol.getName());
-        
+
         this.superclass = classSymbol.getSuperclass();
 
         this.attributes = new TreeMap<>();
@@ -66,7 +66,7 @@ public class ClassSymbol extends Symbol implements Scope {
     }
 
     public void addAttribute(Attribute attribute) {
-        attributes.put(attribute.getName(), attribute); 
+        attributes.put(attribute.getName(), attribute);
     }
 
     public void addMethod(Method method) {
@@ -80,27 +80,26 @@ public class ClassSymbol extends Symbol implements Scope {
     @Override
     public Scope getParent() {
         if (this.superclass != null) {
-            return this.superclass; 
-        } 
-        else {
-            return this.globalScope; 
+            return this.superclass;
+        } else {
+            return this.globalScope;
         }
     }
 
     @Override
     public Symbol search(String name) {
-        if (attributes.containsKey(name)) 
+        if (attributes.containsKey(name))
             return this.getAttribute(name);
 
-        if (methods.containsKey(name)) 
+        if (methods.containsKey(name))
             return this.getMethod(name);
 
-        if (constructors.containsKey(name)) 
+        if (constructors.containsKey(name))
             return this.getConstructor(name);
 
         Scope parent = getParent();
         if (parent != null) {
-            return parent.search(name); 
+            return parent.search(name);
         }
 
         return null; // Símbolo não encontrado
