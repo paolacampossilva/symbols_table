@@ -1,2 +1,5 @@
-#Ingora as classes compiladas
+# Ignora as classes compiladas
 .class
+
+# Ignora pasta "escondida" do MacOS
+.DS_Store
