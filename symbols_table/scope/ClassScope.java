@@ -1,14 +1,20 @@
 package symbols_table.scope;
 
-import symbols_table.symbols.*;
-
 import symbols_table.*;
+import symbols_table.symbols.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-public class ClassScope implements Scope {
+/**
+ * @author Paola Campos da Silva
+ * @author João Pedro Huppes Arenales
+ */
+
+public class ClassScope 
+    implements Scope 
+{
     // Atributos
     private final Scope parent;
     private ClassSymbol classSymbol;
@@ -17,7 +23,8 @@ public class ClassScope implements Scope {
     private TreeMap<String, Constructor> constructors;
 
     // Construtores
-    public ClassScope(ClassSymbol classSymbol, Scope parent) {
+    public ClassScope(ClassSymbol classSymbol, Scope parent) 
+    {
         this.classSymbol = classSymbol;
         this.parent = parent;
 
@@ -27,56 +34,73 @@ public class ClassScope implements Scope {
     }
 
     // Métodos
-
-    public ClassSymbol getClassSymbol() {
+    public ClassSymbol getClassSymbol() 
+    {
         return classSymbol;
     }
 
-    Attribute getAttribute(String attributeName) {
+    Attribute getAttribute(String attributeName) 
+    {
         return attributes.get(attributeName);
     }
 
-    Method getMethod(String methodName) {
+    Method getMethod(String methodName) 
+    {
         return methods.get(methodName);
     }
 
-    public List<Method> getAllMethods() {
+    public List<Method> getAllMethods() 
+    {
         return new ArrayList<>(methods.values());
     }
 
-    Constructor getConstructor(String constructorName) {
+    Constructor getConstructor(String constructorName) 
+    {
         return constructors.get(constructorName);
     }
 
     @Override
-    public Scope getParent() {
+    public Scope getParent() 
+    {
         return parent;
     }
 
     @Override
-    public void define(Symbol symbol) throws DuplicateSymbolException, LogicalException {
+    public void define(Symbol symbol) 
+        throws DuplicateSymbolException, LogicalException 
+    {
         if (symbol instanceof Attribute) {
             if (attributes.containsKey(symbol.getName()))
                 throw new DuplicateSymbolException(symbol.getName());
+            
             attributes.put(symbol.getName(), (Attribute) symbol);
-        } else if (symbol instanceof Constructor) {
+        } 
+        else if (symbol instanceof Constructor) {
             if (constructors.containsKey(symbol.getName()))
                 throw new DuplicateSymbolException(symbol.getName());
+
             constructors.put(symbol.getName(), (Constructor) symbol);
-        } else if (symbol instanceof Method) {
+        } 
+        else if (symbol instanceof Method) {
             Method m = (Method) symbol;
+
             String signature = generateMethodSignature(m.getName(), m.getParameters());
+
             if (methods.containsKey(signature))
                 throw new DuplicateSymbolException(signature);
+            
             methods.put(signature, m);
-        } else
+        } 
+        else
             throw new LogicalException("ClassScope", symbol.getClass().getName());
     }
 
     @Override
-    public Symbol search(String name) {
+    public Symbol search(String name) 
+    {
         if (attributes.containsKey(name))
             return attributes.get(name);
+
         if (constructors.containsKey(name))
             return constructors.get(name);
 
@@ -90,19 +114,25 @@ public class ClassScope implements Scope {
         return null;
     }
 
-    public static String generateMethodSignature(String name, Parameter[] parameters) {
+    public static String generateMethodSignature(String name, Parameter[] parameters) 
+    {
         if (parameters == null || parameters.length == 0)
             return name + "()";
+
         StringBuilder sig = new StringBuilder(name + "(");
+
         for (int i = 0; i < parameters.length; ++i) {
             if (parameters[i].getType() != null)
                 sig.append(parameters[i].getType().toString());
             else
                 sig.append("unknown");
+
             if (i < parameters.length - 1)
                 sig.append(",");
         }
         sig.append(")");
+
         return sig.toString();
     }
-}
+    
+} // ClassScope

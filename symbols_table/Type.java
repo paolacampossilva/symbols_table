@@ -2,9 +2,16 @@ package symbols_table;
 
 import symbols_table.symbols.*;
 
-public class Type {
+/**
+ * @author Paola Campos da Silva
+ * @author João Pedro Huppes Arenales
+ */
+
+public class Type 
+{
     // Enum
-    public enum PrimitiveType {
+    public enum PrimitiveType 
+    {
         INT, FLOAT, VOID
     }
 
@@ -14,17 +21,20 @@ public class Type {
     private boolean isPrimitive;
 
     // Construtores
-    public Type(PrimitiveType type) {
+    public Type(PrimitiveType type) 
+    {
         this.primitiveType = type;
         this.isPrimitive = true;
     }
 
-    public Type(ClassSymbol classType) {
+    public Type(ClassSymbol classType) 
+    {
         this.classType = classType;
         this.isPrimitive = false;
     }
 
-    public Type(Type type) {
+    public Type(Type type) 
+    {
         if (type.isPrimitive()) {
             this.primitiveType = type.getPrimitiveType();
             this.isPrimitive = true;
@@ -36,21 +46,26 @@ public class Type {
     }
 
     // Métodos
-    public boolean isPrimitive() {
+    public boolean isPrimitive() 
+    {
         return isPrimitive;
     }
 
-    public PrimitiveType getPrimitiveType() {
+    public PrimitiveType getPrimitiveType() 
+    {
         return primitiveType;
     }
 
-    public ClassSymbol getClassType() {
-        return classType;
+    public ClassSymbol getClassType() 
+    {
+        return (classType == null) ? null : new ClassSymbol(classType); 
     }
 
-    public boolean isEqualTo(Type other) {
+    public boolean isEqualTo(Type other) 
+    {
         if ((other == null) || (this.isPrimitive != other.isPrimitive()))
             return false;
+        
         if (this.isPrimitive)
             return this.primitiveType == other.getPrimitiveType();
         else
@@ -58,12 +73,12 @@ public class Type {
     }
 
     @Override
-    public String toString() {
-        if (isPrimitive) {
+    public String toString() 
+    {
+        if (isPrimitive) 
             return primitiveType.toString();
-        } else {
+        else 
             return classType.getName();
-        }
     }
 
 } // Type

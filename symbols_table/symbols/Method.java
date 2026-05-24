@@ -2,26 +2,63 @@ package symbols_table.symbols;
 
 import symbols_table.*;
 
-public class Method extends Symbol {
-    private Type returnType;
-    private Parameter[] parameter;
+import java.util.Set;
 
-    public Method(String name) {
+/**
+ * @author Paola Campos da Silva
+ * @author João Pedro Huppes Arenales
+ */
+
+public class Method extends Symbol 
+{
+    // Atributos
+    private final Type returnType;
+    private final Parameter[] parameters;
+
+    // Construtores
+    public Method(String name) 
+    {
         super(name);
-        parameter = null;
-        returnType = null;
+        this.returnType = new Type(Type.PrimitiveType.VOID);
+        this.parameters = new Parameter[0];
     }
 
-    public Method(String name, Parameter[] parameter) {
+    public Method(String name, Type returnType, Parameter[] parameters) 
+    {
         super(name);
-        this.parameter = parameter;
+
+        if (returnType == null)
+            throw new NullPointerException("returnType");
+
+        this.returnType = returnType;
+        this.parameters = (parameters != null) ? parameters.clone() : new Parameter[0];
     }
 
-    public Type getReturnType() {
-        return returnType;
+    public Method(String name, Type returnType, Parameter[] parameters, Set<Modifier> modifiers) {
+        super(name, modifiers);
+
+        if (returnType == null) 
+            throw new NullPointerException("returnType");
+        
+        this.returnType = returnType;
+        this.parameters = (parameters != null) ? parameters.clone() : new Parameter[0];
     }
 
-    public Parameter[] getParameters() {
-        return parameter;
+    // Métodos
+    public Type getReturnType() 
+    { 
+        return returnType; 
     }
-}
+
+    public Parameter[] getParameters() 
+    {
+        return (parameters == null) ? new Parameter[0] : parameters.clone();
+    }
+
+    @Override
+    public String toString() 
+    {
+        return "Method{" + getName() + " : " + returnType + "}";
+    }
+    
+} // Method

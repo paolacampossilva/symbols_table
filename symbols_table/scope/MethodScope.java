@@ -1,7 +1,7 @@
 package symbols_table.scope;
 
-import symbols_table.symbols.*;
 import symbols_table.*;
+import symbols_table.symbols.*;
 
 import java.util.TreeMap;
 
@@ -9,23 +9,32 @@ import java.util.TreeMap;
  * @author Paola Campos da Silva
  * @author João Pedro Huppes Arenales
  */
-public class MethodScope implements Scope {
+
+public class MethodScope 
+    implements Scope 
+{   
+    // Atributos
     private final Scope parent;
     private TreeMap<String, Symbol> symbols;
 
     // Construtor
-    public MethodScope(Scope parent) {
+    public MethodScope(Scope parent) 
+    {
         this.parent = parent;
         this.symbols = new TreeMap<>();
     }
 
+    // Métodos
     @Override
-    public Scope getParent() {
+    public Scope getParent() 
+    {
         return parent;
     }
 
     @Override
-    public void define(Symbol symbol) throws DuplicateSymbolException, LogicalException {
+    public void define(Symbol symbol) 
+        throws DuplicateSymbolException, LogicalException 
+    {
         if ((symbol instanceof Variable) || (symbol instanceof Parameter)) {
             String name = symbol.getName();
 
@@ -33,12 +42,14 @@ public class MethodScope implements Scope {
                 throw new DuplicateSymbolException(name);
 
             symbols.put(name, symbol);
-        } else
+        } 
+        else
             throw new LogicalException(symbol.getClass().getSimpleName());
     }
 
     @Override
-    public Symbol search(String name) {
+    public Symbol search(String name) 
+    {
         if (symbols.containsKey(name))
             return symbols.get(name);
         else if (this.parent != null)
@@ -48,8 +59,9 @@ public class MethodScope implements Scope {
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return "MethodScope" + symbols.keySet();
     }
 
-}
+} // MethodScope
