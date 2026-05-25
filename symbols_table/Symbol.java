@@ -1,7 +1,5 @@
 package symbols_table;
 
-import symbols_table.scope.LogicalException;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,19 +26,15 @@ public abstract class Symbol
     }
 
     public Symbol(String name, Set<Modifier> modifiers) 
-        throws LogicalException
     {
-        if (!isValidName(name)) 
-            throw new IllegalArgumentException("Error: invalid symbol name " + name);
-        
-        this.name = name;
+        if (!isValidName(name))
+            throw new IllegalArgumentException("Nome inválido: " + name);
 
-        if (modifiers != null)
-            this.modifiers = new HashSet<>(modifiers);
-        else {
-            this.modifiers = new HashSet<>();
-            throw new LogicalException();
-        }
+        if (modifiers == null)
+            throw new IllegalArgumentException("modifiers não pode ser null");
+    
+        this.name = name;
+        this.modifiers = new HashSet<>(modifiers);
     }
 
     public Symbol(Symbol symbol) 

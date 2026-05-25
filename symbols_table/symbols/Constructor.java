@@ -32,6 +32,10 @@ public class Constructor extends Symbol
         throws LogicalException
     {
         super(name, modifiers);
+
+        if (this.verifyModifier(modifiers) == null)
+            throw new LogicalException();
+
         this.parameters = new Parameter[0];
     }
 
@@ -39,6 +43,10 @@ public class Constructor extends Symbol
         throws LogicalException
     {
         super(name, modifiers);
+
+        if (this.verifyModifier(modifiers) == null)
+            throw new LogicalException();
+        
         this.parameters = (parameters != null) ? parameters.clone() : new Parameter[0];
     }
 

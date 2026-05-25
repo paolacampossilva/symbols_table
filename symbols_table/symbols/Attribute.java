@@ -39,7 +39,7 @@ public class Attribute extends Symbol
 
     public Type getType(String sent) 
     {
-        return sent == "toString" ? this.type : null;
+        return "toString".equals(sent) ? this.type : null;
     }
 
     @Override

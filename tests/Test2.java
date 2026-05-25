@@ -67,12 +67,12 @@ public class Test2 {
             Set<Modifier> modsPrivateStatic = new HashSet<>(Arrays.asList(Modifier.PRIVATE, Modifier.STATIC));
             table.define(new Attribute("actions", new Type(Type.PrimitiveType.FLOAT), modsPrivateStatic));
 
-            System.out.println(" Manager inherited protected 'salary'? " + table.findSymbol("salary"));
+            System.out.println(" Manager inherited protected 'wage'? " + table.findSymbol("wage"));
             table.closeClass();
 
             // 3. Buscas Qualificadas
             System.out.println("\n --- Qualified Searches and Methods ---");
-            System.out.println(" Qualified 'Employee.salary': " + table.resolveQualified("Employee.salary"));
+            System.out.println(" Qualified 'Employee.wage': " + table.resolveQualified("Employee.wage"));
             System.out.println(" Qualified 'Manager.actions': " + table.resolveQualified("Manager.actions"));
 
             // 4. Resolve chamada de método sobrecarregado

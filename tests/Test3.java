@@ -71,7 +71,7 @@ public class Test3 {
             // 5. Fechando Escopos e verificando a destruição das variáveis
             table.closeBlock(); // Fecha Bloco 2
             System.out.println("\n --- Block 2 Closed ---");
-            System.out.println(" was 'x' destroied? " + (table.findSymbol("x") == null ? "Y" : "N"));
+            System.out.println(" was 'x' destroyed? " + (table.findSymbol("x") == null ? "Y" : "N"));
 
             table.closeBlock(); // Fecha Bloco 1
             table.closeMethod();

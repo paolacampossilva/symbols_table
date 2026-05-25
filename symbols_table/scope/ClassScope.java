@@ -6,6 +6,7 @@ import symbols_table.symbols.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.Collections;
 
 /**
  * @author Paola Campos da Silva
@@ -28,9 +29,9 @@ public class ClassScope
         this.classSymbol = classSymbol;
         this.parent = parent;
 
-        this.attributes = new TreeMap<>();
-        this.methods = new TreeMap<>();
-        this.constructors = new TreeMap<>();
+        attributes = new TreeMap<>();
+        methods = new TreeMap<>();
+        constructors = new TreeMap<>();
     }
 
     // Métodos
@@ -51,7 +52,7 @@ public class ClassScope
 
     public List<Method> getAllMethods() 
     {
-        return new ArrayList<>(methods.values());
+        return Collections.unmodifiableList(new ArrayList<>(methods.values()));
     }
 
     Constructor getConstructor(String constructorName) 
@@ -76,11 +77,15 @@ public class ClassScope
             attributes.put(symbol.getName(), (Attribute) symbol);
         } 
         else if (symbol instanceof Constructor) {
-            if (constructors.containsKey(symbol.getName()))
-                throw new DuplicateSymbolException(symbol.getName());
+            Constructor c = (Constructor) symbol;
 
-            constructors.put(symbol.getName(), (Constructor) symbol);
-        } 
+            String sig = ClassScope.generateMethodSignature(c.getName(), c.getParameters());
+
+            if (constructors.containsKey(sig))
+                throw new DuplicateSymbolException(sig);
+
+            constructors.put(sig, c);
+        }
         else if (symbol instanceof Method) {
             Method m = (Method) symbol;
 

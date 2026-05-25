@@ -46,7 +46,7 @@ public class BlockScope
     public void define(Symbol symbol) 
         throws DuplicateSymbolException, LogicalException 
     {
-        if (!(symbol instanceof Variable) && !(symbol instanceof Parameter))
+        if (!(symbol instanceof Variable))
             throw new LogicalException(symbol.getClass().getSimpleName());
 
         String name = symbol.getName();
