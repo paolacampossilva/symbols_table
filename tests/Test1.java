@@ -9,79 +9,77 @@ import java.util.*;
  * @author Paola Campos da Silva
  * @author João Pedro Huppes Arenales
  * 
- *   TESTE 1 — Escopos Básicos, Construtores e Modificadores
- *   Código fonte simulado no parser:
- * -------------------------------------------------------
- * public class Carro {
- * private int ano;
- *   public Carro() {}
- *   public void ligar() {
- * int chave;
- * }
- * }
- * -------------------------------------------------------
+ *         TESTE 1 — Escopos Básicos, Construtores e Modificadores
+ *         Código fonte simulado no parser:
+ *         -------------------------------------------------------
+ *         public class Carro {
+ *         private int ano;
+ *         public Carro() {}
+ *         public void ligar() {
+ *         int chave;
+ *         }
+ *         }
+ *         -------------------------------------------------------
  */
 
-public class Test1 
-{
-    public static void main(String[] args) 
-    {
-        System.out.println("[INFO] ========================================");
-        System.out.println("[INFO] TESTE 1 — Escopos Básicos e Modificadores");
-        System.out.println("[INFO] ========================================");
+public class Test1 {
+    public static void main(String[] args) {
+        System.out.println(" ========================================");
+        System.out.println(" TEST 1 — Basic Scopes and Modifiers");
+        System.out.println(" ========================================");
 
         SymbolTable table = new SymbolTable();
 
         try {
-            // 1. Declarando a Classe (public class Carro)
-            ClassSymbol carroSym = table.addClass("Carro");
+            // 1. Declarando a Classe (public class Car)
+            ClassSymbol carroSym = table.addClass("Car");
             carroSym.addModifier(Modifier.PUBLIC); // Aplicando modificador explicitamente
-            
+
             ClassScope carroScope = new ClassScope(carroSym, table.getGlobalScope());
             table.openClass(carroScope);
 
-            // 2. Definindo Atributo (private int ano)
+            // 2. Definindo Atributo (private int year)
             Set<Modifier> modsPrivado = new HashSet<>(Arrays.asList(Modifier.PRIVATE));
-            Attribute ano = new Attribute("ano", new Type(Type.PrimitiveType.INT), modsPrivado);
+            Attribute ano = new Attribute("year", new Type(Type.PrimitiveType.INT), modsPrivado);
             table.define(ano);
 
             // 3. Definindo Construtor (public Carro())
             Set<Modifier> modsPublico = new HashSet<>(Arrays.asList(Modifier.PUBLIC));
-            Constructor construtor = new Constructor("Carro", modsPublico);
+            Constructor construtor = new Constructor("Car", modsPublico);
             table.define(construtor);
 
-            // 4. Declarando Método (public void ligar())
-            Method ligarMetodo = table.addMethod("ligar", new Type(Type.PrimitiveType.VOID), new Parameter[0]);
+            // 4. Declarando Método (public void turn_on())
+            Method ligarMetodo = table.addMethod("turn_on", new Type(Type.PrimitiveType.VOID), new Parameter[0]);
             ligarMetodo.addModifier(Modifier.PUBLIC);
-            table.openMethod(ligarMetodo); 
+            table.openMethod(ligarMetodo);
 
             // 5. Definindo Variável Local (variáveis locais usam o escopo de bloco/método)
-            Variable chave = new Variable("chave", new Type(Type.PrimitiveType.INT));
+            Variable chave = new Variable("key", new Type(Type.PrimitiveType.INT));
             table.define(chave);
 
-            System.out.println("\n[INFO] --- Realizando Buscas ---");
-            System.out.println("[PASS] Busca 'chave' (local no método): " + table.findSymbol("chave"));
-            System.out.println("[PASS] Busca 'ano' (sobe p/ classe): " + table.findSymbol("ano"));
-            
+            System.out.println("\n --- Performing Searches ---");
+            System.out.println(" Search 'key' (local in the method): " + table.findSymbol("key"));
+            System.out.println(" Search 'year' (up to class): " + table.findSymbol("year"));
+
             table.closeMethod();
             table.closeClass();
 
-            System.out.println("\n[INFO] --- Buscas Globais ---");
-            System.out.println("[PASS] findClass('Carro'): " + table.findClass("Carro"));
-            System.out.println("[PASS] findMethods('ligar'): " + table.findMethods("ligar", carroSym));
+            System.out.println("\n --- Global Searchs ---");
+            System.out.println(" findClass('Car'): " + table.findClass("Car"));
+            System.out.println(" findMethods('turn_on'): " + table.findMethods("turn_on", carroSym));
 
             // 6. Testando Robustez
-            System.out.println("\n[INFO] --- Testando Fail-safes ---");
+            System.out.println("\n --- Testing Fail-safes ---");
             try {
-                table.addClass("Carro"); // Tentativa de duplicar classe no GlobalScope
+                table.addClass("Car"); // Tentativa de duplicar classe no GlobalScope
             } catch (DuplicateSymbolException e) {
-                System.out.println("[PASS] Fail-safe (Classe duplicada barrada): " + e.getMessage());
+                System.out.println(" Fail-safe (Duplicate class blocked): " + e.getMessage());
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        System.out.println("[INFO] ========================================\n");
+
+        System.out.println(" ========================================\n");
     }
 } // Test 1
