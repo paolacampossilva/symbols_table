@@ -28,10 +28,10 @@ public abstract class Symbol
     public Symbol(String name, Set<Modifier> modifiers) 
     {
         if (!isValidName(name))
-            throw new IllegalArgumentException("Nome inválido: " + name);
+            throw new IllegalArgumentException("Invalid name: " + name);
 
         if (modifiers == null)
-            throw new IllegalArgumentException("modifiers não pode ser null");
+            throw new IllegalArgumentException("modifiers cannot be null");
     
         this.name = name;
         this.modifiers = new HashSet<>(modifiers);
