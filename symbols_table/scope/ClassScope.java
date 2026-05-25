@@ -114,7 +114,8 @@ public class ClassScope
         return null;
     }
 
-    public static String generateMethodSignature(String name, Parameter[] parameters) 
+    public static String generateMethodSignature(String name, Parameter[] parameters)
+        throws LogicalException
     {
         if (parameters == null || parameters.length == 0)
             return name + "()";

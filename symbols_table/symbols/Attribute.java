@@ -1,6 +1,7 @@
 package symbols_table.symbols;
 
 import symbols_table.*;
+import symbols_table.scope.LogicalException;
 
 import java.util.Set;
 
@@ -16,12 +17,14 @@ public class Attribute extends Symbol
 
     // Construtores
     public Attribute(String name, Type type) 
+        throws LogicalException
     {
         super(name);
         this.type = new Type(type);
     }
 
     public Attribute(String name, Type type, Set<Modifier> modifiers) 
+        throws LogicalException
     {
         super(name, modifiers);
         this.type = new Type(type);
@@ -29,8 +32,14 @@ public class Attribute extends Symbol
 
     // Métodos
     public Type getType() 
+        throws LogicalException
     {
         return new Type(this.type); 
+    }
+
+    public Type getType(String sent) 
+    {
+        return sent == "toString" ? this.type : null;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package symbols_table;
 
 import symbols_table.symbols.*;
+import symbols_table.scope.LogicalException;
 
 /**
  * @author Paola Campos da Silva
@@ -29,11 +30,15 @@ public class Type
 
     public Type(ClassSymbol classType) 
     {
+        if (classType == null)
+            throw new IllegalArgumentException("classType cannot be null");
+
         this.classType = classType;
         this.isPrimitive = false;
     }
 
     public Type(Type type) 
+        throws LogicalException
     {
         if (type.isPrimitive()) {
             this.primitiveType = type.getPrimitiveType();
@@ -57,11 +62,13 @@ public class Type
     }
 
     public ClassSymbol getClassType() 
+        throws LogicalException
     {
         return (classType == null) ? null : new ClassSymbol(classType); 
     }
 
     public boolean isEqualTo(Type other) 
+        throws LogicalException
     {
         if ((other == null) || (this.isPrimitive != other.isPrimitive()))
             return false;

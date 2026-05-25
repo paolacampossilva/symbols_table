@@ -130,6 +130,7 @@ public class SymbolTable
     }
 
     public Method findMethod(String name, List<Type> argTypes, ClassSymbol clazz) 
+        throws LogicalException
     {
         if (clazz == null) 
             return null;
@@ -168,10 +169,8 @@ public class SymbolTable
             throw new LogicalException("ClassScope", "MethodScope");
 
         MethodScope methodScope = new MethodScope(currentClass);
-        if (method.getParameters() != null) {
-            for (Parameter p : method.getParameters())
-                methodScope.define(p);
-        }
+        for (Parameter p : method.getParameters())
+            methodScope.define(p);
 
         currentScope = methodScope;
     }

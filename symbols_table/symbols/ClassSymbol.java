@@ -1,6 +1,7 @@
 package symbols_table.symbols;
 
 import symbols_table.*;
+import symbols_table.scope.LogicalException;
 
 /**
  * @author Paola Campos da Silva
@@ -25,6 +26,7 @@ public class ClassSymbol extends Symbol
     }
 
     public ClassSymbol(ClassSymbol classSymbol) 
+        throws LogicalException
     {
         super(classSymbol.getName(), classSymbol.getModifiers());
         ClassSymbol superclass = classSymbol.getSuperclass();

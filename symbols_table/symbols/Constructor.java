@@ -1,6 +1,7 @@
 package symbols_table.symbols;
 
 import symbols_table.*;
+import symbols_table.scope.LogicalException;
 
 import java.util.Set;
 
@@ -27,13 +28,31 @@ public class Constructor extends Symbol
         this.parameters = (parameters != null) ? parameters.clone() : new Parameter[0];
     }
 
+    public Constructor(String name, Set<Modifier> modifiers) 
+        throws LogicalException
+    {
+        super(name, modifiers);
+        this.parameters = new Parameter[0];
+    }
+
     public Constructor(String name, Parameter[] parameters, Set<Modifier> modifiers) 
+        throws LogicalException
     {
         super(name, modifiers);
         this.parameters = (parameters != null) ? parameters.clone() : new Parameter[0];
     }
 
     // Métodos
+    public Set<Modifier> verifyModifier(Set<Modifier> modifiers)
+    {   
+        for (Modifier m : modifiers) {
+            if (m.ordinal() > 2)
+                return null; 
+        }
+
+        return modifiers;
+    }
+
     public Parameter[] getParameters() 
     {
         return parameters.clone();
@@ -50,7 +69,7 @@ public class Constructor extends Symbol
         Parameter[] p = getParameters();
 
         for (int i = 0; i < p.length; i++) {
-            sb.append(p[i].getType());
+            sb.append(p[i].getType("toString"));
             if (i < p.length - 1) sb.append(", ");
         }
 

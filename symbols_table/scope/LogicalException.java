@@ -18,4 +18,9 @@ public class LogicalException extends Exception
         super("Error: is not acceptable to add a " + symbol + " without a open " + scope);
     }
 
+    public LogicalException() 
+    {
+        super("Error: no acceptable modifier specified");
+    }
+
 } // LogicalException
