@@ -14,11 +14,13 @@ import java.util.*;
  *         Código fonte simulado no parser:
  *         -------------------------------------------------------
  *         public class Carro {
- *         private int ano;
- *         public Carro() {}
- *         public void ligar() {
- *         int chave;
- *         }
+ *             private int ano;
+ * 
+ *             public Carro() {}
+ * 
+ *             public void ligar() {
+ *                 int chave;
+ *           }
  *         }
  *         -------------------------------------------------------
  */

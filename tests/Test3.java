@@ -5,23 +5,24 @@ import symbols_table.scope.*;
 import symbols_table.symbols.*;
 
 /**
- * TESTE 3 — Aninhamento Profundo e Fail-Safes Estruturais
- * Simula:
- * class Calculadora {
- * void processar(int a) {
- * { // Bloco 1
- * int temp;
- * { // Bloco 2 (Aninhado)
- * int x;
- * int temp; // ERRO: Duplicado no mesmo escopo/hierarquia local
- * }
- * }
- * }
- * }
- * 
  * @author Paola Campos da Silva
  * @author João Pedro Huppes Arenales
  * 
+ *         TESTE 3 — Aninhamento Profundo e Fail-Safes Estruturais
+ *         Código fonte simulado no parser:
+ *         -------------------------------------------------------
+ *         class Calculadora {
+ *             void processar(int a) {
+ *                 { // Bloco 1
+ *                     int temp;
+ *                     { // Bloco 2 (Aninhado)
+ *                         int x;
+ *                         int temp; // ERRO: Duplicado no mesmo escopo/hierarquia local
+ *                     }
+ *                 }
+ *             }
+ *         }
+ *         -------------------------------------------------------
  */
 
 public class Test3 
@@ -40,8 +41,7 @@ public class Test3
 
             // 1. Classe -> Método
             Parameter paramA = new Parameter("a", new Type(Type.PrimitiveType.INT));
-            Method procMetodo = table.addMethod("process", new Type(Type.PrimitiveType.VOID),
-                    new Parameter[] { paramA });
+            Method procMetodo = table.addMethod("process", new Type(Type.PrimitiveType.VOID), new Parameter[] { paramA });
             table.openMethod(procMetodo);
 
             // 2. Método -> Bloco 1

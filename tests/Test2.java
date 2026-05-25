@@ -14,12 +14,15 @@ import java.util.*;
  *         Código fonte simulado no parser:
  *         -------------------------------------------------------
  *         public class Funcionario {
- *         protected float salario;
- *         public void pagar() {}
- *         public void pagar(int bonus) {}
+ *             protected float salario;
+ * 
+ *             public void pagar() {}
+ * 
+ *             public void pagar(int bonus) {}
  *         }
+ * 
  *         public class Gerente extends Funcionario {
- *         private static float acoes;
+ *             private static float acoes;
  *         }
  *         -------------------------------------------------------
  */
