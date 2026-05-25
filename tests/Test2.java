@@ -3,6 +3,7 @@ package tests;
 import symbols_table.*;
 import symbols_table.scope.*;
 import symbols_table.symbols.*;
+
 import java.util.*;
 
 /**
