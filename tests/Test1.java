@@ -23,8 +23,10 @@ import java.util.*;
  *         -------------------------------------------------------
  */
 
-public class Test1 {
-    public static void main(String[] args) {
+public class Test1 
+{
+    public static void main(String[] args) 
+    {
         System.out.println(" ========================================");
         System.out.println(" TEST 1 — Basic Scopes and Modifiers");
         System.out.println(" ========================================");

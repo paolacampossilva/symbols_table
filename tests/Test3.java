@@ -24,8 +24,10 @@ import symbols_table.symbols.*;
  * 
  */
 
-public class Test3 {
-    public static void main(String[] args) {
+public class Test3 
+{
+    public static void main(String[] args) 
+    {
         System.out.println(" ========================================");
         System.out.println(" TEST 3 — Deep Nesting and Errors");
         System.out.println(" ========================================");

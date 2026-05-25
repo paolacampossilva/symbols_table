@@ -24,8 +24,10 @@ import java.util.*;
  *         -------------------------------------------------------
  */
 
-public class Test2 {
-    public static void main(String[] args) {
+public class Test2 
+{
+    public static void main(String[] args) 
+    {
         System.out.println(" ========================================");
         System.out.println(" TEST 2 — Inheritance and Qualified Search");
         System.out.println(" ========================================");
