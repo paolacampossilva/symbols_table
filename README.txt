@@ -20,9 +20,11 @@ A classe `SymbolTable` foi desenvolvida com sucesso. Ela gerencia o escopo corre
 Criamos uma bateria de testes separada em 3 cenários robustos (`Test1`, `Test2` e `Test3`), executados em sequência pela classe `Main`. A aplicação simula as chamadas do parser de forma idêntica à especificação, testando desde a declaração básica de variáveis até aninhamento profundo de blocos, herança, resolução de sobrecarga de métodos e falhas semânticas (Fail-safes).
 
 # Vídeo de Apresentação
-Link para o vídeo explicativo: 
+Link para o vídeo explicativo: https://www.youtube.com/watch?v=Kx46ZV0yZso
+
+- Obs.: as explicações feitas no vídeo são extremamente resumidas em razão do limite de tempo.
 
 # Repositório no GitHub
 Link para o repositório: https://github.com/paolacampossilva/symbols_table
 
-Obs.: no GitHub o README está em MarkDown, o que facilita a visualização do documento.
+- Obs.: no GitHub o README está em MarkDown, o que facilita a visualização do documento e a sua formatação.
